@@ -1,7 +1,8 @@
-/*
- * Create a list that holds all of your cards
- */
-
+//Create array to hold all the cards
+ let cardsArray = [];
+ $('.deck').find('li').each(function() {
+ 	cardsArray.push(this);
+ });
 
 /*
  * Display the cards on the page
