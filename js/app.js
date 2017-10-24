@@ -2,14 +2,21 @@
  let cardsArray = [];
  $('.deck').find('li').each(function() {
  	cardsArray.push(this);
- });
-
+ 	console.log(this);
+});
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+//shuffle the list of cards using the "shuffle" method
+shuffle(cardsArray);
+
+//loop all the cards and add them to the page
+for(let i = 0; i < cardsArray.length; i++) {
+	$('.deck').append(cardsArray[i]);
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
