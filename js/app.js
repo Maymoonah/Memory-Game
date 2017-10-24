@@ -44,11 +44,22 @@ function shuffle(array) {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 
+//create openCardsList array to hold open cards
+let openCardsList = [];
+
 //Event listener when a card is clicked
 $('.card').on('click', function() {
 	//call displayCards function
 	displayCard(this);
 
+	//add card to open list
+	openCardsList.push(this);
+
 	//call openCards function
 	openCards(this);
 });
+
+//function to display card symbol
+function displayCard(card) {
+	$(card).css('font-size', '30px');
+}
