@@ -94,3 +94,8 @@ function hideCard(card) {
 	}		
 }
 
+//function to increment moves made by player
+function moves() {
+	counter++;
+	$('.moves').text(counter);
+}
