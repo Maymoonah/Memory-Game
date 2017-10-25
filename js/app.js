@@ -99,3 +99,11 @@ function moves() {
 	counter++;
 	$('.moves').text(counter);
 }
+
+//restart game
+$('.restart').on('click', function() {
+	$('.card').removeClass('open');
+	$('.card').css('font-size', '0px');
+	openCardsList = [];
+	$('.moves').text('0');
+});
