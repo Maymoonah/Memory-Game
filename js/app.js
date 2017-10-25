@@ -46,20 +46,32 @@ function shuffle(array) {
 
 //create openCardsList array to hold open cards
 let openCardsList = [];
+let counter = 0;
 
 //Event listener when a card is clicked
 $('.card').on('click', function() {
-	//call displayCards function
 	displayCard(this);
-
-	//add card to open list
-	openCardsList.push(this);
-
-	//call openCards function
-	openCards(this);
+	AddOpenCard(this);
 });
 
 //function to display card symbol
 function displayCard(card) {
 	$(card).css('font-size', '30px');
+}
+
+//function to add open cards to list
+function AddOpenCard(card) {
+	//add card to open cards list
+	openCardsList.push(card);
+
+	//check if both open cards match
+	if(openCardsList.length > 1) {
+		if(openCardsList[0] === openCardsList[1]) {
+			keepOpen(card);
+			moves();
+		} else {
+			hideCard(card);
+			moves();
+		}
+	}
 }
