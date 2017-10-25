@@ -85,3 +85,12 @@ function keepOpen(card) {
 	}
 }
 
+//function to remove cards from open list
+function hideCard(card) {
+	for(let i = 0; i < 2; i++) {
+		$(card).removeClass('open');
+		$(card).css('font-size', '0px');
+		openCardsList = [];
+	}		
+}
+
