@@ -52,6 +52,7 @@ let counter = 0;
 $('.card').on('click', function() {
 	displayCard(this);
 	AddOpenCard(this);
+	keepOpen(this);
 });
 
 //function to display card symbol
@@ -75,3 +76,12 @@ function AddOpenCard(card) {
 		}
 	}
 }
+
+//function to lock cards in open position
+function keepOpen(card) {
+	for(let i = 0; i < openCardsList.length; i++) {
+		$(card).addClass('open');	
+		$(card).css('font-size', '30px');
+	}
+}
+
