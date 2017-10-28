@@ -54,7 +54,7 @@ let counter = 0;
 //Event listener when a card is clicked
 $('.card').on('click', function() {
 	displayCard(this);
-	AddOpenCard(this);
+	addOpenCard(this);
 	//add card to open cards list
 	openCardsList.push(this);
 });
@@ -65,7 +65,7 @@ function displayCard(card) {
 }
 
 //function to add open cards to a list
-function AddOpenCard(card) {;
+function addOpenCard(card) {;
 	//check if there are two cards in the list
 	if(openCardsList.length === 2) {
 		if(openCardsList[0].innerHTML === openCardsList[1].innerHTML) {
