@@ -11,10 +11,14 @@
  */
 //shuffle the list of cards using the "shuffle" method
 shuffle(cardsArray);
+//append cards to deck using append method
+appendCards();
 
-//loop all the cards and add them to the page
-for(let i = 0; i < cardsArray.length; i++) {
+//loop through all the cards and add them to the webpage
+function appendCards() {
+	for(let i = 0; i < cardsArray.length; i++) {
 	$('.deck').append(cardsArray[i]);
+	}
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -32,7 +36,6 @@ function shuffle(array) {
     return array;
 }
 
-
 /*
 * set up the event listener for a card. If a card is clicked:
 *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -45,53 +48,49 @@ function shuffle(array) {
 */
 
 //create openCardsList array to hold open cards
-let openCardsList = [];
+let openCardsList = [], keepCardsOpen = [];
 let counter = 0;
 
 //Event listener when a card is clicked
 $('.card').on('click', function() {
 	displayCard(this);
 	AddOpenCard(this);
-	keepOpen(this);
+	//add card to open cards list
+	openCardsList.push(this);
 });
 
 //function to display card symbol
 function displayCard(card) {
-	$(card).css('font-size', '30px');
+	$(card).addClass('open show');
 }
 
-//function to add open cards to list
-function AddOpenCard(card) {
-	//add card to open cards list
-	openCardsList.push(card);
-
-	//check if both open cards match
-	if(openCardsList.length > 1) {
-		if(openCardsList[0] === openCardsList[1]) {
-			keepOpen(card);
-			moves();
+//function to add open cards to a list
+function AddOpenCard(card) {;
+	//check if there are two cards in the list
+	if(openCardsList.length === 2) {
+		if(openCardsList[0].innerHTML === openCardsList[1].innerHTML) {
+			//if cards match
+			keepOpen(openCardsList);
+			//if all cards are matched
+			allMatched();
 		} else {
-			hideCard(card);
-			moves();
+			//if cards don't match
+			hideCard(openCardsList);
 		}
+		openCardsList.splice(0, 2);
+		moves();
 	}
 }
 
 //function to lock cards in open position
 function keepOpen(card) {
-	for(let i = 0; i < openCardsList.length; i++) {
-		$(card).addClass('open');	
-		$(card).css('font-size', '30px');
-	}
+	$(card).removeClass('open show');
+	$(card).addClass('match');
 }
 
 //function to remove cards from open list
 function hideCard(card) {
-	for(let i = 0; i < 2; i++) {
-		$(card).removeClass('open');
-		$(card).css('font-size', '0px');
-		openCardsList = [];
-	}		
+	$(card).removeClass('open show match noMatch');
 }
 
 //function to increment moves made by player
@@ -100,10 +99,26 @@ function moves() {
 	$('.moves').text(counter);
 }
 
+function restartGame() {
+	$('.card').each(function() {
+		hideCard();
+	});
+	counter = 0;
+	$('.moves').text(counter);
+	//shuffle cards
+	shuffle(cardsArray);
+	//append card to deck
+	appendCards();
+}
 //restart game
-$('.restart').on('click', function() {
-	$('.card').removeClass('open');
-	$('.card').css('font-size', '0px');
-	openCardsList = [];
-	$('.moves').text('0');
-});
+$('.restart').on('click', restartGame);
+
+//if all cards are matched, display message and final score
+function allMatched() {
+	let player = $('#name').val();
+	if($('li.match').length === 16) {
+		alert(
+			`Congratulations ${player}! Your Score: 15`  
+			);
+	}
+}
