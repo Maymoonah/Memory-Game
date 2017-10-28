@@ -33,6 +33,22 @@ h1 {
     font-weight: 300;
 }
 
+label, input {
+    margin: 15px;
+}
+
+label {
+    font-size: 20px;
+    font-family: 'comic sans ms';
+    font-weight: bold;
+}
+
+input {
+    padding: 4px;
+    font-family: 'comic sans ms';
+    font-size: 18px;
+}
+
 /*
  * Styles for the deck of cards
  */
@@ -78,6 +94,12 @@ h1 {
 .deck .card.match {
     cursor: default;
     background: #02ccba;
+    font-size: 33px;
+}
+
+.deck .card.noMatch {
+    cursor: default;
+    background: #ed5a6d;
     font-size: 33px;
 }
 
