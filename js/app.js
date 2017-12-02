@@ -48,15 +48,25 @@ function shuffle(array) {
 */
 
 //create openCardsList array to hold open cards
-let openCardsList = [], keepCardsOpen = [];
-let counter = 0;
+let openCardsList = [];
+let movesCounter = 0;
+let timesClicked = 0;
+
+
+
 
 //Event listener when a card is clicked
 $('.card').on('click', function() {
+	timesClicked++;
 	displayCard(this);
 	addOpenCard(this);
-	//add card to open cards list
-	openCardsList.push(this);
+	//add card to openCardsList
+	openCardsList.push(this);	
+	//start timer only after first click
+	if(timesClicked === 1){
+		gameTimer();
+	}
+	starRating();	
 });
 
 //function to display card symbol
@@ -72,7 +82,7 @@ function addOpenCard(card) {;
 			//if cards match
 			keepOpen(openCardsList);
 			//if all cards are matched
-			allMatched();
+			gameWon();
 		} else {
 			//if cards don't match
 			hideCard(openCardsList);
@@ -84,8 +94,8 @@ function addOpenCard(card) {;
 
 //function to lock cards in open position
 function keepOpen(card) {
-	$(card).removeClass('open show');
 	$(card).addClass('match');
+	$(card).removeClass('open show');
 }
 
 //function to remove cards from open list
@@ -95,30 +105,64 @@ function hideCard(card) {
 
 //function to increment moves made by player
 function moves() {
-	counter++;
-	$('.moves').text(counter);
+	movesCounter++;
+	$('.moves').text(movesCounter);
 }
 
 function restartGame() {
-	$('.card').each(function() {
-		hideCard();
-	});
-	counter = 0;
-	$('.moves').text(counter);
+	$('.card').removeClass('open show match');
+	movesCounter = 0;
+	$('.moves').text(movesCounter);
+	$('#name').val('');
 	//shuffle cards
 	shuffle(cardsArray);
 	//append card to deck
 	appendCards();
+	//stop timer
+	stop();
+	//reset star rating
+	$('.fa-star').css('color', '#ffe500');
 }
+
 //restart game
 $('.restart').on('click', restartGame);
 
 //if all cards are matched, display message and final score
-function allMatched() {
+function gameWon() {
 	let player = $('#name').val();
 	if($('li.match').length === 16) {
 		alert(
-			`Congratulations ${player}! Your Score: 15`  
+			`Congratulations ${player}! Your Score: ${movesCounter * 10}`  
 			);
 	}
+	stop();
+}
+
+//Star rating
+$('.fa-star').css('color', '#ffe500');
+function starRating() {
+	let numMoves = $('.moves').text();
+	let stars = $('.fa-star');
+	//if number of moves are between 9 and 15, change star rating to 2
+	if(numMoves > 8 && numMoves <= 15) {
+		stars.last().css('color', '#000');
+	}
+	//if number of moves is greater than 15, change rating to 1 star 
+	else if(numMoves > 15) {
+		stars.css('color', '#000');
+		stars.first().css('color', '#ffe500');
+	}
+}
+
+
+//gameTimer function 
+function gameTimer() {
+	//Stack overflow: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+	var sec = 0;
+    function pad ( val ) { return val > 9 ? val : "0" + val; }
+    setInterval( function(){
+        // document.getElementById("seconds").innerHTML=pad(++sec%60);
+        document.getElementById("timer").innerHTML= "Time Played: " +
+        pad(parseInt(sec/60,10)) + ":" + pad(++sec%60);
+    }, 1000);
 }
