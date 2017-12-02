@@ -129,3 +129,11 @@ input {
     float: right;
     cursor: pointer;
 }
+
+#timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: #af051c;
+   
+    padding: 2px;
+}
