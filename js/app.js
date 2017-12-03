@@ -23,7 +23,7 @@ function appendCards() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -47,13 +47,11 @@ function shuffle(array) {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 
-//create openCardsList array to hold open cards
+//create variables and openCardsList array to hold open cards
 let openCardsList = [];
 let movesCounter = 0;
 let timesClicked = 0;
-
-
-
+let timer, sec;
 
 //Event listener when a card is clicked
 $('.card').on('click', function() {
@@ -82,7 +80,9 @@ function addOpenCard(card) {;
 			//if cards match
 			keepOpen(openCardsList);
 			//if all cards are matched
-			gameWon();
+			if($('.match').length === 16) {
+				gameWon();
+			}
 		} else {
 			//if cards don't match
 			hideCard(openCardsList);
@@ -100,7 +100,7 @@ function keepOpen(card) {
 
 //function to remove cards from open list
 function hideCard(card) {
-	$(card).removeClass('open show match noMatch');
+	$(card).removeClass('open show match');
 }
 
 //function to increment moves made by player
@@ -110,18 +110,21 @@ function moves() {
 }
 
 function restartGame() {
+	//hide cards
 	$('.card').removeClass('open show match');
+	//reset moves counter
 	movesCounter = 0;
 	$('.moves').text(movesCounter);
+	//reset player name
 	$('#name').val('');
 	//shuffle cards
 	shuffle(cardsArray);
 	//append card to deck
 	appendCards();
-	//stop timer
-	stop();
 	//reset star rating
 	$('.fa-star').css('color', '#ffe500');
+	//reset timer
+	resetTimer();
 }
 
 //restart game
@@ -130,12 +133,17 @@ $('.restart').on('click', restartGame);
 //if all cards are matched, display message and final score
 function gameWon() {
 	let player = $('#name').val();
+	let score = 100 - movesCounter;
+	if(movesCounter === 8) {
+		score = 100;
+	}
 	if($('li.match').length === 16) {
 		alert(
-			`Congratulations ${player}! Your Score: ${movesCounter * 10}`  
+			`Congratulations ${player}! Your Score: ${score}!`  
 			);
 	}
-	stop();
+	//stop timer
+	stopTimer();	
 }
 
 //Star rating
@@ -154,15 +162,26 @@ function starRating() {
 	}
 }
 
-
 //gameTimer function 
 function gameTimer() {
 	//Stack overflow: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
-	var sec = 0;
+	sec = 0;
     function pad ( val ) { return val > 9 ? val : "0" + val; }
-    setInterval( function(){
-        // document.getElementById("seconds").innerHTML=pad(++sec%60);
+    timer = setInterval( function(){    
         document.getElementById("timer").innerHTML= "Time Played: " +
         pad(parseInt(sec/60,10)) + ":" + pad(++sec%60);
-    }, 1000);
+    }, 1000); 
+}
+
+//stop the game timer
+function stopTimer() {
+	clearInterval(timer);
+}
+
+//reset the game timer
+function resetTimer() {
+	sec = 0;
+	clearInterval(timer);
+	$('#timer').html('Time Played: 00:00');
+	timesClicked = 0;
 }
