@@ -36,12 +36,14 @@ let openCardsList = [];
 let movesCounter = 0;
 let timesClicked = 0;
 let timer, sec;
+let stars = $('.fa-star');
+let player, timeTaken, countStars;
 
 //Event listener when a card is clicked
 $('.card').on('click', function() {
 	timesClicked++;
 	displayCard(this);
-	addOpenCard(this);
+	addOpenCard();
 	//add card to openCardsList
 	openCardsList.push(this);
 	//start timer only after first click
@@ -57,7 +59,7 @@ function displayCard(card) {
 }
 
 //function to add open cards to a list
-function addOpenCard(card) {
+function addOpenCard() {
 	//check if there are two cards in the list
 	if(openCardsList.length === 2) {
 		if(openCardsList[0].innerHTML === openCardsList[1].innerHTML) {
@@ -80,11 +82,12 @@ function addOpenCard(card) {
 function keepOpen(card) {
 	$(card).addClass('match');
 	$(card).removeClass('open show');
+	$(card).effect('bounce', {times: 3}, 'slow');
 }
 
-//function to remove cards from open list
+//function to flip cards face down
 function hideCard(card) {
-	$(card).removeClass('open show match');
+	$(card).removeClass('open show match noMatch');
 }
 
 //function to increment moves made by player
@@ -93,6 +96,7 @@ function moves() {
 	$('.moves').text(movesCounter);
 }
 
+//restart game
 function restartGame() {
 	//hide cards
 	$('.card').removeClass('open show match');
@@ -110,31 +114,39 @@ function restartGame() {
 	//reset timer
 	resetTimer();
 }
-
-//restart game
 $('.restart').on('click', restartGame);
 
 //if all cards are matched, display message and final score
 function gameWon() {
-	let player = $('#name').val();
+	//get player name, score, and time taken
+	player = $('#name').val();
 	let score = 100 - movesCounter;
+	timeTaken = $('#timer').html();
 	if(movesCounter === 8) {
 		score = 100;
 	}
-	if($('li.match').length === 16) {
-		alert(
-			`Congratulations ${player}! Your Score: ${score}!`
-			);
+	//get star rating
+	countStars = 0;
+	// stars.each(function() {
+	// 	if($(this).css('color', '#ffe500')) {
+	// 		countStars++;
+	// 	}
+	// });
+	for(let i = 0; i < stars.length; i++) {
+		if(stars.eq(i).css('color') === '#ffe500') {
+			countStars++;
+		}
 	}
 	//stop timer
 	stopTimer();
+	//diplay Modal when player wins
+	displayModal();
 }
 
 //Star rating
 $('.fa-star').css('color', '#ffe500');
 function starRating() {
 	let numMoves = $('.moves').text();
-	let stars = $('.fa-star');
 	//if number of moves are between 9 and 15, change star rating to 2
 	if(numMoves > 8 && numMoves <= 15) {
 		stars.last().css('color', '#000');
@@ -169,3 +181,17 @@ function resetTimer() {
 	$('#timer').html('Time Played: 00:00');
 	timesClicked = 0;
 }
+
+//Display Modal when player wins game
+function displayModal() {
+	$('.winModal').css('display', 'block');
+	$('#congrats').append(`Congratulations ${player}!`);
+	$('#timeTaken').append(timeTaken);
+	$('#starRating').append(`Star Rating: ${countStars}`);
+}
+
+//play again
+$('#yes').on('click', function() {
+	restartGame();
+	$('.winModal').css('display', 'none');
+});
