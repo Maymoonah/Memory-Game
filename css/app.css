@@ -137,3 +137,28 @@ input {
    
     padding: 2px;
 }
+
+.winModal {
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+}
+
+.info {
+    font-weight: bold;
+    margin: auto;
+    text-align: center;
+    margin: 10% auto; 
+    font-size: 48px;
+    color: #02b3e4;
+}
+
+button {
+    font-size: 24px;
+    padding: 10px 30px;
+    margin: 20px;
+}
