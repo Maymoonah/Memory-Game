@@ -127,16 +127,11 @@ function gameWon() {
 	}
 	//get star rating
 	countStars = 0;
-	// stars.each(function() {
-	// 	if($(this).css('color', '#ffe500')) {
-	// 		countStars++;
-	// 	}
-	// });
-	for(let i = 0; i < stars.length; i++) {
-		if(stars.eq(i).css('color') === '#ffe500') {
+	stars.each(function() {
+		if($(this).css('color') === '#ffe500'){
 			countStars++;
 		}
-	}
+	});
 	//stop timer
 	stopTimer();
 	//diplay Modal when player wins
