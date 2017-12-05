@@ -29,8 +29,9 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+    font-family: 'Righteous', cursive;
+    text-transform: uppercase;
+    text-shadow: 2px 2px #02b3e4;
 }
 
 label, input {
@@ -138,6 +139,15 @@ input {
     padding: 2px;
 }
 
+/*
+ * Styles for the Modal
+ */
+
+ #playAgain {
+    font-weight: bold;
+    color: #000;
+ }
+
 .winModal {
     display: none;
     position: fixed;
@@ -153,7 +163,7 @@ input {
     margin: auto;
     text-align: center;
     margin: 10% auto; 
-    font-size: 48px;
+    font-size: 32px;
     color: #02b3e4;
 }
 
@@ -161,4 +171,7 @@ button {
     font-size: 24px;
     padding: 10px 30px;
     margin: 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    box-shadow: 3px 3px grey;
 }
