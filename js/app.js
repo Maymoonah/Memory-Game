@@ -185,13 +185,18 @@ function resetTimer() {
 //Display Modal when player wins game
 function displayModal() {
 	$('.winModal').css('display', 'block');
-	$('#congrats').append(`Congratulations ${player}!`);
-	$('#timeTaken').append(timeTaken);
-	$('#starRating').append(`Star Rating: ${countStars}`);
+	$('#congrats').html(`Congratulations ${player}!`);
+	$('#timeTaken').html(timeTaken);
+	$('#starRating').html(`Star Rating: ${countStars}`);
 }
 
 //play again
 $('#yes').on('click', function() {
 	restartGame();
+	$('.winModal').css('display', 'none');
+});
+
+//don't play again
+$('#no').on('click', function() {
 	$('.winModal').css('display', 'none');
 });
