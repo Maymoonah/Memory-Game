@@ -4,18 +4,6 @@ $('.deck').find('li').each(function() {
 	cardsArray.push(this);
 });
 
-//shuffle the list of cards using the "shuffle" method
-shuffle(cardsArray);
-//append cards to deck using append method
-appendCards();
-
-//loop through all the cards and add them to the webpage
-function appendCards() {
-	for(let i = 0; i < cardsArray.length; i++) {
-	$('.deck').append(cardsArray[i]);
-	}
-}
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
 	let currentIndex = array.length, temporaryValue, randomIndex;
@@ -31,25 +19,41 @@ function shuffle(array) {
 	return array;
 }
 
+//shuffle the list of cards using the "shuffle" method
+shuffle(cardsArray);
+
+//loop through all the cards and add them to the webpage
+function appendCards() {
+	for(let i = 0; i < cardsArray.length; i++) {
+	$('.deck').append(cardsArray[i]);
+	}
+}
+
+//append cards to deck using append method
+appendCards();
+
 //create variables and openCardsList array to hold open cards
-let openCardsList = [];
+let openCardsList = [], pos = [];
 let movesCounter = 0;
-let timesClicked = 0;
+let timesClicked = 0, cardClicked = 0;;
 let timer, sec;
 let stars = $('.fa-star');
 let player, timeTaken, countStars;
 
 //Event listener when a card is clicked
-$('.card').on('click', function() {
+$('.card').on('click', function(e) {
 	timesClicked++;
+	cardClicked++;
 	displayCard(this);
-	addOpenCard();
-	//add card to openCardsList
+	addOpenCard(this);
+	//add card to openCardsList only if card is clicked once
 	openCardsList.push(this);
+	//add index of cards clicked clicked to pos array
+	pos.push($(this).index());
 	//start timer only after first click
 	if(timesClicked === 1){
 		gameTimer();
-	}
+	} 
 	starRating();
 });
 
@@ -59,27 +63,36 @@ function displayCard(card) {
 }
 
 //function to add open cards to a list
-function addOpenCard() {
+function addOpenCard(card) {
 	//check if there are two cards in the list
 	if(openCardsList.length === 2) {
-		if(openCardsList[0].innerHTML === openCardsList[1].innerHTML) {
-			//if cards match
-			keepOpen(openCardsList);
-			//if all cards are matched
-			if($('.match').length === 16) {
-				gameWon();
+		//check to see if user clicks on same card twice by comparing index
+		if(pos[0] !== pos[1]) {
+			if(openCardsList[0].innerHTML === openCardsList[1].innerHTML) {
+				//if cards match
+				keepOpen(openCardsList);
+				//if all cards are matched
+				if($('.match').length === 16) {
+					gameWon();
+				}
+			} else {
+				//if cards don't match
+				hideCard(openCardsList);
 			}
-		} else {
-			//if cards don't match
-			hideCard(openCardsList);
+			//remove both cards from openCardsList and increment moves
+			openCardsList.splice(0, 2);
+			moves();
 		}
+		//If the same card is clicked on twice, remove it from openCardsList and pos arrays, and hide it
+		hideCard(openCardsList);
 		openCardsList.splice(0, 2);
-		moves();
+		pos.splice(0, 2);
 	}
 }
 
 //function to lock cards in open position
 function keepOpen(card) {
+	if(card)
 	$(card).addClass('match');
 	$(card).removeClass('open show');
 	$(card).effect('bounce', {times: 3}, 'slow');
@@ -87,7 +100,7 @@ function keepOpen(card) {
 
 //function to flip cards face down
 function hideCard(card) {
-	$(card).removeClass('open show match noMatch');
+	$(card).removeClass('open show match');
 }
 
 //function to increment moves made by player
