@@ -35,7 +35,7 @@ appendCards();
 //create variables and openCardsList array to hold open cards
 let openCardsList = [], pos = [];
 let movesCounter = 0;
-let timesClicked = 0, cardClicked = 0;;
+let timesClicked = 0;
 let timer, sec;
 let stars = $('.fa-star');
 let player, timeTaken, countStars;
@@ -43,13 +43,14 @@ let player, timeTaken, countStars;
 //Event listener when a card is clicked
 $('.card').on('click', function(e) {
 	timesClicked++;
-	cardClicked++;
 	displayCard(this);
 	addOpenCard(this);
-	//add card to openCardsList only if card is clicked once
-	openCardsList.push(this);
-	//add index of cards clicked clicked to pos array
-	pos.push($(this).index());
+	//add card to openCardsList if it doesn't have a class of 'match'
+	if(!$(this).hasClass('match')) {
+		openCardsList.push(this);
+		//add index of cards clicked to pos array
+		pos.push($(this).index());		
+	}
 	//start timer only after first click
 	if(timesClicked === 1){
 		gameTimer();
@@ -84,9 +85,11 @@ function addOpenCard(card) {
 			moves();
 		}
 		//If the same card is clicked on twice, remove it from openCardsList and pos arrays, and hide it
+		
 		hideCard(openCardsList);
 		openCardsList.splice(0, 2);
 		pos.splice(0, 2);
+		
 	}
 }
 
