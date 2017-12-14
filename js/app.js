@@ -49,12 +49,12 @@ $('.card').on('click', function(e) {
 	if(!$(this).hasClass('match')) {
 		openCardsList.push(this);
 		//add index of cards clicked to pos array
-		pos.push($(this).index());		
+		pos.push($(this).index());
 	}
 	//start timer only after first click
 	if(timesClicked === 1){
 		gameTimer();
-	} 
+	}
 	starRating();
 });
 
@@ -85,17 +85,14 @@ function addOpenCard(card) {
 			moves();
 		}
 		//If the same card is clicked on twice, remove it from openCardsList and pos arrays, and hide it
-		
 		hideCard(openCardsList);
 		openCardsList.splice(0, 2);
 		pos.splice(0, 2);
-		
 	}
 }
 
 //function to lock cards in open position
 function keepOpen(card) {
-	if(card)
 	$(card).addClass('match');
 	$(card).removeClass('open show');
 	$(card).effect('bounce', {times: 3}, 'slow');
@@ -142,12 +139,7 @@ function gameWon() {
 		score = 100;
 	}
 	//get star rating
-	countStars = 0;
-	stars.each(function() {
-		if($(this).css('color') === '#ffe500'){
-			countStars++;
-		}
-	});
+	countStars = $(this).css('color', '#ffe500').length;
 	//stop timer
 	stopTimer();
 	//diplay Modal when player wins
@@ -198,7 +190,12 @@ function displayModal() {
 	$('.winModal').css('display', 'block');
 	$('#congrats').html(`Congratulations ${player}!`);
 	$('#timeTaken').html(timeTaken);
-	$('#starRating').html(`Star Rating: ${countStars}`);
+	let sRate = $('#starRating');
+	if(countStars === 1){
+		sRate.html(`Star Rating: ${countStars} star`);
+	} else {
+		sRate.html(`Star Rating: ${countStars} stars`);
+	}
 }
 
 //play again
