@@ -38,7 +38,7 @@ let movesCounter = 0;
 let timesClicked = 0;
 let timer, sec;
 let stars = $('.fa-star');
-let player, timeTaken, countStars;
+let player, timeTaken, countStars = 0, starColor;
 
 //Event listener when a card is clicked
 $('.card').on('click', function(e) {
@@ -126,6 +126,10 @@ function restartGame() {
 	$('.fa-star').css('color', '#ffe500');
 	//reset timer
 	resetTimer();
+	//empty openCardsList and pos arrays
+	openCardsList.splice(0, 2);
+	pos.splice(0, 2);
+	countStars = 0;
 }
 $('.restart').on('click', restartGame);
 
@@ -138,8 +142,6 @@ function gameWon() {
 	if(movesCounter === 8) {
 		score = 100;
 	}
-	//get star rating
-	countStars = $(this).css('color', '#ffe500').length;
 	//stop timer
 	stopTimer();
 	//diplay Modal when player wins
@@ -190,6 +192,12 @@ function displayModal() {
 	$('.winModal').css('display', 'block');
 	$('#congrats').html(`Congratulations ${player}!`);
 	$('#timeTaken').html(timeTaken);
+	//get star rating
+	for(let i = 0; i < stars.length; i++){
+		if(stars.eq(i).css('color') === 'rgb(255, 229, 0)'){
+			countStars++;
+		}
+	}
 	let sRate = $('#starRating');
 	if(countStars === 1){
 		sRate.html(`Star Rating: ${countStars} star`);
