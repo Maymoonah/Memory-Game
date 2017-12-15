@@ -98,12 +98,6 @@ input {
     font-size: 33px;
 }
 
-.deck .card.noMatch {
-    cursor: default;
-    background: #ed5a6d;
-    font-size: 33px;
-}
-
 /*
  * Styles for the Score Panel
  */
@@ -174,4 +168,49 @@ button {
     border-radius: 25px;
     font-weight: bold;
     box-shadow: 3px 3px grey;
+}
+
+/*creating media queries*/
+@media only screen and (max-width: 700px) {
+    .deck{
+        width: 433px;
+        min-height: 550px;
+    }
+
+    .deck .card {
+        width: 83px;
+        height: 83px;
+    }
+
+    .deck .card.show {
+    font-size: 25px;
+}
+
+    .deck .card.match {
+        cursor: default;
+        background: #02ccba;
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 515px) {
+    .deck {
+        width: 350px;
+        min-height: 450px;
+    }
+
+    .deck .card {
+        width: 63px;
+        height: 63px;
+    }
+
+    .deck .card.show {
+        font-size: 17px;
+    }
+
+    .deck .card.match {
+        cursor: default;
+        background: #02ccba;
+        font-size: 17px;
+    }
 }
