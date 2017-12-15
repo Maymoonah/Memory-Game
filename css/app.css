@@ -195,7 +195,7 @@ button {
 
 @media only screen and (max-width: 515px) {
     .deck {
-        width: 350px;
+        width: 330px;
         min-height: 450px;
     }
 
@@ -212,5 +212,11 @@ button {
         cursor: default;
         background: #02ccba;
         font-size: 17px;
+    }
+
+    .score-panel {
+        text-align: left;
+        width: 320px;
+        margin-bottom: 10px;
     }
 }
