@@ -1,28 +1,11 @@
 # Memory Game Project
 
-## Table of Contents
+The Memory Game is made up of sixteen cards, which makes 8 pairs of cards. These cards are placed randomly on the card deck and are placed face down. The player can only see two cards at a time. If the cards match, the cards remain open, otherwise they are flipped face down again. The game is timed, and there are star ratings. The star rating depends on how many moves the player has made. When the player wins, a modal appears with the player's name, the time it took to win the game, and the star rating. The player has the option to restart the game any time they wish.
 
-* 
-[Instructions](#instructions)
-* [Contributing](#contributing)
+## Usage
 
-## Instructions
+- The memory game is an online game and therefore no libraries need to be installed
 
+- The application works well with all browsers, and its components are responsive to different devices.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. 
-You'll need to convert this project from a static project to an interactive one. 
-This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, 
-look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. 
-Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+- There are no known bugs as of now.
