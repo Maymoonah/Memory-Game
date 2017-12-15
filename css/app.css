@@ -219,4 +219,8 @@ button {
         width: 320px;
         margin-bottom: 10px;
     }
+
+    input {
+        width: 200px;
+    }
 }
