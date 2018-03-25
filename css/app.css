@@ -138,13 +138,8 @@ input {
  * Styles for the Modal
  */
 
- #playAgain {
-    font-weight: bold;
-    color: #000;
- }
-
-.winModal {
-    display: none;
+ .winModal {
+    /*display: none;*/
     position: fixed;
     height: 100%;
     width: 100%;
@@ -160,8 +155,8 @@ input {
     text-align: center;
     font-family: 'Luckies Guy', cursive;
     font-size: 32px;
-    /*color: #02b3e4;*/
-    text-shadow: 4px 4px 10px #fff;
+    color: #02b3e4;
+    text-shadow: 4px 4px 10px #000;
     background-color: rgba(36, 71, 104, 0.9);
     margin: 4% auto;
     padding: 10px;
@@ -180,6 +175,10 @@ button {
     border-radius: 25px;
     font-weight: bold;
     box-shadow: 3px 3px grey;
+}
+
+#congrats, #starRating, #timeTaken, #playAgain {
+    color: #fff;
 }
 
 /*creating media queries*/
